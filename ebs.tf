@@ -8,7 +8,7 @@ resource "aws_ebs_volume" "gitlab-ebs-001" {
   tags = merge(
      local.common_tags,
      {
-       Name = "${var.env}-infra-ue1b-glab-ebs-001"
+       Name = "${var.env}-infra-ue1b-glab-ebs"
      }
    )
 }
@@ -16,8 +16,8 @@ resource "aws_ebs_volume" "gitlab-ebs-001" {
 ### GitLab EBS Volume Attachment ###
 resource "aws_volume_attachment" "ebs_attachment" {
    provider    = aws.svcs
-   depends_on  = [aws_ebs_volume.gitlab-ebs-001]
+   depends_on  = [aws_ebs_volume.gitlab-ebs]
    device_name = var.ebs_device_name
-   volume_id   = aws_ebs_volume.gitlab-ebs-001.id
+   volume_id   = aws_ebs_volume.gitlab-ebs.id
    instance_id = aws_instance.gitlab-server.id
 }
